@@ -1,4 +1,4 @@
-FROM rabbitmq:3.6
+FROM rabbitmq:3.9.13
 
 ENV RABBITMQ_DEFAULT_USER admin
 ENV RABBITMQ_DEFAULT_PASS admin
