@@ -1,0 +1,43 @@
+# references:
+#   https://hub.docker.com/_/rabbitmq
+
+version: "3.7"
+
+services:
+    rabbitmq:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        image: rabbitmq:1.0.0
+        container_name: rabbitmq
+        restart: unless-stopped
+        ports:
+            - "1883:1883"
+            - "5671:5671"
+            - "5672:5672"
+            - "15672:15672"
+            - "15674:15674"
+            - "15675:15675"
+            - "15692:15692"
+            - "25672:25672"
+            - "61613:61613"
+        volumes:
+            - rabbitmq-volume:/var/lib/rabbitmq
+        environment:
+            RABBITMQ_DEFAULT_VHOST: master
+            RABBITMQ_DEFAULT_USER: admin
+            RABBITMQ_DEFAULT_PASS: admin
+            # RABBITMQ_ERLANG_COOKIE: EOzFBGMs1AK6E5QIat444
+        hostname: rabbitmq
+        networks:
+            - rabbitmq-network
+
+volumes:
+    rabbitmq-volume:
+        name: rabbitmq-volume
+        driver: local
+
+networks:
+    rabbitmq-network:
+        name: rabbitmq-network
+        driver: bridge
