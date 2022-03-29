@@ -2,9 +2,12 @@
 
 # build docker image
 docker build --no-cache \
-    --file ./Dockerfile \
+    --file docker/rabbit/Dockerfile \
     --tag webento/rabbitmq:latest \
     --tag webento/rabbitmq \
-    .
+    docker/rabbit
+
+
+
 
 docker push webento/rabbitmq:latest
