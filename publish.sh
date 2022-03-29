@@ -3,11 +3,8 @@
 # build docker image
 docker build --no-cache \
     --file ./Dockerfile \
-    --tag pedrozc90/rabbitmq:1.0.0 \
-    --tag pedrozc90/rabbitmq \
+    --tag webento/rabbitmq:1.0.0 \
+    --tag webento/rabbitmq \
     .
 
-# push to docker hub
-docker push pedrozc90/rabbitmq
-
-docker push pedrozc90/rabbitmq:1.0.0
+docker push webento/rabbitmq:1.0.0
