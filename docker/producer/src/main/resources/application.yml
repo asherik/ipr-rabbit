@@ -1,1 +1,27 @@
+server:
+  port: 8080
 
+spring:
+  application:
+    name: producer
+  datasource:
+    url: jdbc:postgresql://localhost:5433/postgres
+    username: ipr-user
+    password: ipr-pass
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQL10Dialect
+    generate-ddl: false
+    hibernate:
+      ddl-auto: validate
+    show-sql: false
+    database: postgresql
+    properties:
+      hibernate:
+        default_schema: billlk
+        generate_statistics: false
+        jdbc:
+          batch_size: 100
+          fetch_size: 100
+        order_inserts: true
+        order_updates: true
+    open-in-view: false
