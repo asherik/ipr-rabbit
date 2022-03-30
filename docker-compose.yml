@@ -1,14 +1,11 @@
 # references:
 #   https://hub.docker.com/_/rabbitmq
 
-version: "3.7"
+version: "3.9"
 
 services:
     rabbitmq:
-        build:
-            context: ""
-            dockerfile: Dockerfile
-        image: rabbitmq:1.0.0
+        image: webento/rabbitmq:latest
         container_name: rabbitmq
         restart: unless-stopped
         ports:
@@ -22,57 +19,59 @@ services:
             - "25672:25672"
             - "61613:61613"
         volumes:
-            - rabbitmq-volume:/var/lib/rabbitmq
+            - rabbitmq-volume:${PROJECT_ABSOLUTE_PATH}/data/rabbitmq
         environment:
             RABBITMQ_DEFAULT_VHOST: master
-            RABBITMQ_DEFAULT_USER: admin
-            RABBITMQ_DEFAULT_PASS: admin
+            RABBITMQ_DEFAULT_USER: ipr-user
+            RABBITMQ_DEFAULT_PASS: ipr-pass
             # RABBITMQ_ERLANG_COOKIE: EOzFBGMs1AK6E5QIat444
         hostname: rabbitmq
         networks:
-            - rabbitmq-network
+            - ipr-network
 
     postgres:
         container_name: postgres_container
         image: postgres
         environment:
-            POSTGRES_USER: ${POSTGRES_USER:-postgres}
-            POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-changeme}
-            PGDATA: /data/postgres
+            POSTGRES_USER: ipr-user
+            POSTGRES_PASSWORD: ipr-pass
+            PGDATA: ${PROJECT_ABSOLUTE_PATH}/data/postgres
         volumes:
-            - postgres:/data/postgres
+            - postgres-volume:${PROJECT_ABSOLUTE_PATH}/data/postgres
         ports:
-            - "5432:5432"
+            - "5433:5432"
         networks:
-            - postgres
+            - ipr-network
         restart: unless-stopped
 
     pgadmin:
         container_name: pgadmin_container
         image: dpage/pgadmin4
         environment:
-            PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-pgadmin4@pgadmin.org}
-            PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:-admin}
+            PGADMIN_DEFAULT_EMAIL: pgadmin4@pgadmin.org
+            PGADMIN_DEFAULT_PASSWORD: admin
             PGADMIN_CONFIG_SERVER_MODE: 'False'
         volumes:
-            - pgadmin:/var/lib/pgadmin
+            - pgadmin-volume:${PROJECT_ABSOLUTE_PATH}/data/pgadmin
 
         ports:
             - "${PGADMIN_PORT:-5050}:80"
         networks:
-            - postgres
+            - ipr-network
         restart: unless-stopped
 
 volumes:
     rabbitmq-volume:
         name: rabbitmq-volume
         driver: local
-    postgres:
-    pgadmin:
+    postgres-volume:
+        name: postgres-volume
+        driver: local
+    pgadmin-volume:
+        name: pgadmin-volume
+        driver: local
 
 networks:
-    rabbitmq-network:
-        name: rabbitmq-network
-        driver: bridge
-    postgres:
+    ipr-network:
+        name: ipr-network
         driver: bridge

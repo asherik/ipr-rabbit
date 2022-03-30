@@ -7,7 +7,4 @@ docker build --no-cache \
     --tag webento/rabbitmq \
     docker/rabbit
 
-
-
-
 docker push webento/rabbitmq:latest
