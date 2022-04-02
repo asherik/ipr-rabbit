@@ -31,7 +31,7 @@ spring:
     port: ${RABBIT_PORT:5672}
     username: ${RABBIT_USERNAME:ipr-user}
     password: ${RABBIT_PASSWORD:ipr-pass}
-    virtual-host: ${RABBIT_VIRTUAL_HOST:/master}
+    virtual-host: ${RABBIT_VIRTUAL_HOST:master}
 
 
 ipr-rabbit:

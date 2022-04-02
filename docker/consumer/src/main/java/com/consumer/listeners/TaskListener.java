@@ -28,7 +28,7 @@ public class TaskListener {
      * @param channel     channel
      * @param deliveryTag deliveryTag
      */
-    @RabbitListener(queues = "ipr.task", containerFactory = "taskRabbitListenerFactory")
+    @RabbitListener(queues = "ipr.task", containerFactory = "rabbitListenerContainerFactory")
     public void processTask(TaskMessage taskMessage,
                             Channel channel,
                             @Header(AmqpHeaders.DELIVERY_TAG) Long deliveryTag) throws Exception {
