@@ -40,3 +40,11 @@ ipr-rabbit:
   dlqQueue: "ipr.task-dlq"
   deadLetterExchange: "DLX"
   dlqRoutingKey: "ipr.task"
+  rabbit:
+    consumer:
+      concurrentConsumers: 1
+      maxConcurrentConsumers: 1
+      prefetchCount: 1
+      receiveTimeout: 5000
+      defaultRequeueRejected: false
+      acknowledgeMode: "MANUAL"
