@@ -25,3 +25,18 @@ spring:
         order_inserts: true
         order_updates: true
     open-in-view: false
+
+  rabbitmq:
+    host: ${RABBIT_HOST:localhost}
+    port: ${RABBIT_PORT:5672}
+    username: ${RABBIT_USERNAME:ipr-user}
+    password: ${RABBIT_PASSWORD:ipr-pass}
+    virtual-host: ${RABBIT_VIRTUAL_HOST:/master}
+
+
+ipr-rabbit:
+  taskExchange: "ipr.taskExchange"
+  taskQueue: "ipr.task"
+  dlqQueue: "ipr.task-dlq"
+  deadLetterExchange: "DLX"
+  dlqRoutingKey: "ipr.task"
