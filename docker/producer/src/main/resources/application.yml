@@ -1,0 +1,50 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: producer
+  datasource:
+    url: jdbc:postgresql://localhost:5433/postgres
+    username: ipr-user
+    password: ipr-pass
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQL10Dialect
+    generate-ddl: false
+    hibernate:
+      ddl-auto: validate
+    show-sql: false
+    database: postgresql
+    properties:
+      hibernate:
+        default_schema: billlk
+        generate_statistics: false
+        jdbc:
+          batch_size: 100
+          fetch_size: 100
+        order_inserts: true
+        order_updates: true
+    open-in-view: false
+
+  rabbitmq:
+    host: ${RABBIT_HOST:localhost}
+    port: ${RABBIT_PORT:5672}
+    username: ${RABBIT_USERNAME:ipr-user}
+    password: ${RABBIT_PASSWORD:ipr-pass}
+    virtual-host: ${RABBIT_VIRTUAL_HOST:master}
+
+
+ipr-rabbit:
+  taskExchange: "ipr.taskExchange"
+  taskQueue: "ipr.task"
+  dlqQueue: "ipr.task-dlq"
+  deadLetterExchange: "DLX"
+  dlqRoutingKey: "ipr.task"
+  rabbit:
+    consumer:
+      concurrentConsumers: 1
+      maxConcurrentConsumers: 1
+      prefetchCount: 1
+      receiveTimeout: 5000
+      defaultRequeueRejected: false
+      acknowledgeMode: "MANUAL"
