@@ -1,4 +1,4 @@
-package com.consumer.exception;
+package com.producer.exception;
 
 public class TaskException extends Exception {
     public TaskException(String message) {

@@ -1,4 +1,4 @@
-package com.consumer.helpers;
+package com.producer.helpers;
 
 import lombok.extern.slf4j.Slf4j;
 

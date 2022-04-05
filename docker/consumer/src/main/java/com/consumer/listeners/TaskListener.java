@@ -1,6 +1,6 @@
 package com.consumer.listeners;
 
-import com.consumer.constants.ErrorMessages;
+import com.consumer.constants.InfoMessages;
 import com.consumer.dto.rabbit.TaskMessage;
 import com.consumer.exception.TaskException;
 import com.consumer.helpers.Helper;
@@ -33,11 +33,11 @@ public class TaskListener {
                             Channel channel,
                             @Header(AmqpHeaders.DELIVERY_TAG) Long deliveryTag) throws Exception {
         try {
-            log.debug(ErrorMessages.TASK_START_PROCESS, taskMessage.getTaskId());
+            log.debug(InfoMessages.TASK_START_PROCESS, taskMessage.getTaskId());
             //имитируем реальные условия работы с рандомным результатом, задержкой и рандомным эксепшеном
             Helper.getImitateWorkRandomResult();
             channel.basicAck(deliveryTag, false);
-            log.debug(ErrorMessages.TASK_END_PROCESS_SUCCESS, taskMessage.getTaskId());
+            log.debug(InfoMessages.TASK_END_PROCESS_SUCCESS, taskMessage.getTaskId());
         } catch (Exception e) {
             if (Objects.nonNull(taskMessage.getTaskId())) {
                 //возвращаем обратно в очередь

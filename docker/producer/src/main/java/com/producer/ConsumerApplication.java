@@ -1,4 +1,4 @@
-package com.consumer;
+package com.producer;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

@@ -1,9 +1,9 @@
-package com.consumer.listeners;
+package com.producer.listeners;
 
-import com.consumer.constants.ErrorMessages;
-import com.consumer.dto.rabbit.TaskMessage;
-import com.consumer.exception.TaskException;
-import com.consumer.helpers.Helper;
+import com.producer.constants.ErrorMessages;
+import com.producer.constants.InfoMessages;
+import com.producer.dto.rabbit.TaskMessage;
+import com.producer.exception.TaskException;
 import com.rabbitmq.client.Channel;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,31 +22,24 @@ import java.util.Objects;
 public class TaskListener {
 
     /**
-     * Process income task message.
+     * Process income dlq task message.
      *
      * @param taskMessage taskMessage
      * @param channel     channel
      * @param deliveryTag deliveryTag
      */
-    @RabbitListener(queues = "ipr.task", containerFactory = "rabbitListenerContainerFactory")
+    @RabbitListener(queues = "${ipr-rabbit.dlqQueue}", containerFactory = "rabbitListenerContainerFactory")
     public void processTask(TaskMessage taskMessage,
                             Channel channel,
                             @Header(AmqpHeaders.DELIVERY_TAG) Long deliveryTag) throws Exception {
         try {
-            log.debug(ErrorMessages.TASK_START_PROCESS, taskMessage.getTaskId());
-            //имитируем реальные условия работы с рандомным результатом, задержкой и рандомным эксепшеном
-            Helper.getImitateWorkRandomResult();
+            log.debug(InfoMessages.TASK_START_PROCESS, taskMessage.getTaskId());
+            //помечаем в базе задание как ошибочное
             channel.basicAck(deliveryTag, false);
-            log.debug(ErrorMessages.TASK_END_PROCESS_SUCCESS, taskMessage.getTaskId());
+            log.debug(InfoMessages.TASK_END_PROCESS_SUCCESS, taskMessage.getTaskId());
         } catch (Exception e) {
-            if (Objects.nonNull(taskMessage.getTaskId())) {
-                //возвращаем обратно в очередь
-                channel.basicNack(deliveryTag, false, true);
-            } else {
-                //отправим в dlq
-                channel.basicNack(deliveryTag, false, false);
-            }
-
+            //возвращаем обратно в очередь
+            channel.basicNack(deliveryTag, false, true);
             var errorText = acquireErrorMessage(e);
             log.error(errorText);
             throw new TaskException(errorText);

@@ -1,4 +1,4 @@
-package com.consumer.config;
+package com.producer.config;
 
 
 import org.springframework.amqp.core.AcknowledgeMode;
@@ -19,7 +19,7 @@ import org.springframework.boot.autoconfigure.amqp.SimpleRabbitListenerContainer
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.util.ErrorHandler;
-import com.consumer.handler.RabbitHandler;
+import com.producer.handler.RabbitHandler;
 
 import java.util.HashMap;
 import java.util.Map;

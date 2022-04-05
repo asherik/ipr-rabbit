@@ -1,4 +1,4 @@
-package com.consumer.dto.rabbit;
+package com.producer.dto.rabbit;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
