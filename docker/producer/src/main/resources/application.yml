@@ -4,6 +4,10 @@ server:
 spring:
   application:
     name: producer
+  task:
+    scheduling:
+      pool:
+        size: 10
   datasource:
     url: jdbc:postgresql://localhost:5433/postgres
     username: ipr-user
@@ -13,11 +17,11 @@ spring:
     generate-ddl: false
     hibernate:
       ddl-auto: validate
-    show-sql: false
+    show-sql: true
     database: postgresql
     properties:
       hibernate:
-        default_schema: billlk
+        default_schema: taskservice
         generate_statistics: false
         jdbc:
           batch_size: 100
@@ -25,6 +29,10 @@ spring:
         order_inserts: true
         order_updates: true
     open-in-view: false
+  liquibase:
+    change-log: classpath:liquibase/changelog.xml
+    default-schema: taskservice
+    liquibase-schema: taskservice
 
   rabbitmq:
     host: ${RABBIT_HOST:localhost}

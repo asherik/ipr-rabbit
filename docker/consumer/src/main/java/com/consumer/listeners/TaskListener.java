@@ -7,10 +7,8 @@ import com.consumer.helpers.Helper;
 import com.rabbitmq.client.Channel;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.amqp.support.AmqpHeaders;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.stereotype.Component;
 
@@ -60,18 +58,6 @@ public class TaskListener {
      * @return String
      */
     private String acquireErrorMessage(Exception e) {
-        String errorText;
-        if ((e instanceof DataIntegrityViolationException) && (e.getCause() instanceof ConstraintViolationException)) {
-            log.error("Error while writing to DB ", e);
-            var error = (ConstraintViolationException) e.getCause();
-            if (Objects.nonNull(error.getSQLException())) {
-                errorText = error.getSQLException().toString();
-            } else {
-                errorText = error.toString();
-            }
-        } else {
-            errorText = e.getCause().toString();
-        }
-        return errorText;
+        return e.getCause().toString();
     }
 }

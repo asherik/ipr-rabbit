@@ -10,4 +10,10 @@ public interface TaskSender {
      * @param taskMessage
      */
     void sendTask(TaskMessage taskMessage);
+
+    /**
+     * Поиск задания и отправка в реббит
+     */
+    void handleTask();
+
 }

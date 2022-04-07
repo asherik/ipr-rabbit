@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+		https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.9.xsd">
+    <changeSet id="1" author="asherik">
+        <createTable tableName="task">
+            <column name="id" type="uuid" autoIncrement="${autoIncrement}">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="text" type="text" remarks="Текст для обработки">
+                <constraints nullable="false"/>
+            </column>
+            <column name="status" type="varchar(255)" remarks="Статус задания">
+                <constraints nullable="false"/>
+            </column>
+            <column name="date_create" remarks="Дата создания задания"
+                    type="timestamp with timezone">
+                <constraints nullable="false"/>
+            </column>
+            <column name="date_processing" remarks="Дата обработки"
+                    type="timestamp with timezone">
+            </column>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>
