@@ -1,4 +1,4 @@
-package com.consumer.config;
+package com.taskservice.config;
 
 
 import org.springframework.amqp.core.AcknowledgeMode;
@@ -19,7 +19,7 @@ import org.springframework.boot.autoconfigure.amqp.SimpleRabbitListenerContainer
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.util.ErrorHandler;
-import com.consumer.handler.RabbitHandler;
+import com.taskservice.handler.RabbitHandler;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -61,11 +61,10 @@ public class RabbitConfig {
                 new SimpleRabbitListenerContainerFactory();
         configurer.configure(factory, connectionFactory);
         factory.setErrorHandler(errorHandler());
-        factory.setAcknowledgeMode(AcknowledgeMode.valueOf(acknowledgeMode));
         return factory;
     }
 
-    @Bean(name = "iprRabbitListenerFactory")
+    @Bean(name = "rabbitDlqListenerContainerFactory")
     public RabbitListenerContainerFactory iprRabbitListenerFactory(ConnectionFactory connectionFactory) {
         SimpleRabbitListenerContainerFactory rabbitListenerContainerFactory = new SimpleRabbitListenerContainerFactory();
         rabbitListenerContainerFactory.setConnectionFactory(connectionFactory);

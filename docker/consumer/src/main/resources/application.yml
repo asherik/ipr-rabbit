@@ -27,3 +27,9 @@ ipr-rabbit:
       receiveTimeout: 5000
       defaultRequeueRejected: false
       acknowledgeMode: "MANUAL"
+
+feign:
+  services:
+    task-service:
+      url: ${TASK_SERVICE_HOST:localhost:8080}
+      path: ${TASK_SERVICE_API_PATH:/api/v1}
