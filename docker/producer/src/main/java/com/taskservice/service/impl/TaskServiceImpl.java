@@ -30,4 +30,10 @@ public class TaskServiceImpl implements TaskService {
         task.setStatus(taskStatus.toString());
         taskRepository.save(task);
     }
+
+    @Override
+    public Task getTaskData(UUID taskId) {
+        //TODO сделать обработку эксепшена при не найденном id задания
+        return taskRepository.findById(taskId).orElseThrow();
+    }
 }

@@ -53,12 +53,43 @@ services:
             PGADMIN_CONFIG_SERVER_MODE: 'False'
         volumes:
             - pgadmin-volume:${PROJECT_ABSOLUTE_PATH}/data/pgadmin
-
         ports:
             - "${PGADMIN_PORT:-5050}:80"
         networks:
             - ipr-network
         restart: unless-stopped
+
+    task-service:
+        container_name: task-service
+        image: webento/producer:latest
+        ports:
+            - "8090:8080"
+        networks:
+            - ipr-network
+        restart: unless-stopped
+        environment:
+            POSTGRE_JDBC_URL: jdbc:postgresql://postgres:5433/postgres
+            RABBIT_HOST: rabbitmq
+
+    consumer-1:
+        container_name: consumer-1
+        image: webento/consumer:latest
+        networks:
+            - ipr-network
+        restart: unless-stopped
+        environment:
+            TASK_SERVICE_HOST: task-service:8080
+            RABBIT_HOST: rabbitmq
+
+    consumer-2:
+        container_name: consumer-2
+        image: webento/consumer:latest
+        networks:
+            - ipr-network
+        restart: unless-stopped
+        environment:
+            TASK_SERVICE_HOST: task-service:8080
+            RABBIT_HOST: rabbitmq
 
 volumes:
     rabbitmq-volume:
