@@ -37,6 +37,25 @@ sudo ./publish_rabbit.sh
 3) сервис-продюсер - 1 контейнер
 4) сервис-консюмер - 2 контейнера
 
+Дорступные эндпоинты со стороны главного сервиса заданий
+
+Создание задания
+POST /api/v1/create-task
+Входные параметры:
+json в body
+Пример: {"text": "any text"}
+
+Получение данных задания
+GET /api/v1/get-task-data
+Входные параметры:
+taskId - тип UUID
+
+Изменение статуса задания
+PUT /api/v1/update-task-status
+Входные параметры:
+taskId - тип UUID
+taskStatus - String
+
 ## Лицензия
 
 MIT
