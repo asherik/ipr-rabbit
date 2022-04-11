@@ -23,6 +23,13 @@ sudo bash ./run.sh
 После запуска будет доступно:
 http://localhost:8090 для отправки запросов к главному сервису заданий (продюсеру)
 
+Чтобы добавить задание отправить в body json слудующего формата
+```
+POST localhost:8090/api/v1/create-task
+
+{"text": "any text"}
+```
+
 Вход в rabbit mq
 ```
 http://localhost:15672 
