@@ -1,0 +1,57 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: producer
+  task:
+    scheduling:
+      pool:
+        size: 10
+  datasource:
+    url: ${POSTGRE_JDBC_URL:jdbc:postgresql://localhost:5433/postgres}
+    username: ${POSTGRE_USER:ipr-user}
+    password: ${POSTGRE_PASS:ipr-pass}
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQL10Dialect
+    generate-ddl: false
+    hibernate:
+      ddl-auto: validate
+    show-sql: true
+    database: postgresql
+    properties:
+      hibernate:
+        default_schema: authservice
+        generate_statistics: false
+        jdbc:
+          batch_size: 100
+          fetch_size: 100
+        order_inserts: true
+        order_updates: true
+    open-in-view: false
+  liquibase:
+    change-log: classpath:liquibase/changelog.xml
+    default-schema: authservice
+    liquibase-schema: authservice
+
+  rabbitmq:
+    host: ${RABBIT_HOST:localhost}
+    port: ${RABBIT_PORT:5672}
+    username: ${RABBIT_USERNAME:ipr-user}
+    password: ${RABBIT_PASSWORD:ipr-pass}
+    virtual-host: ${RABBIT_VIRTUAL_HOST:master}
+
+ipr-rabbit:
+  taskExchange: "ipr.taskExchange"
+  taskQueue: "ipr.task"
+  dlqQueue: "ipr.task-dlq"
+  deadLetterExchange: "DLX"
+  dlqRoutingKey: "ipr.task"
+  rabbit:
+    consumer:
+      concurrentConsumers: 1
+      maxConcurrentConsumers: 1
+      prefetchCount: 1
+      receiveTimeout: 5000
+      defaultRequeueRejected: false
+      acknowledgeMode: "MANUAL"

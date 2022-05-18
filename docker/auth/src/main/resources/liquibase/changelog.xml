@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+		https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.9.xsd">
+    <changeSet id="1" author="asherik">
+        <createTable tableName="user">
+            <column name="id" type="uuid" autoIncrement="${autoIncrement}">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="varchar(255)" remarks="Фамилия">
+                <constraints nullable="false"/>
+            </column>
+            <column name="lastname" type="varchar(255)" remarks="Имя">
+                <constraints nullable="false"/>
+            </column>
+            <column name="middlename" type="varchar(255)" remarks="Отчество">
+                <constraints nullable="false"/>
+            </column>
+            <column name="login" type="varchar(255)" remarks="Логин">
+                <constraints nullable="false"/>
+            </column>
+            <column name="password" type="varchar(255)" remarks="Пароль пользователя">
+                <constraints nullable="false"/>
+            </column>
+            <column name="date_create" remarks="Дата создания пользователя"
+                    type="timestamp with timezone">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="role">
+            <column name="id" type="uuid" autoIncrement="${autoIncrement}">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="varchar(255)" remarks="Название роли">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="user_role">
+            <column name="user_id" type="uuid">
+                <constraints nullable="false"/>
+            </column>
+            <column name="role_id" type="uuid">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint constraintName="fk_user"
+                                 baseTableName="user_role" baseColumnNames="user_id"
+                                 referencedTableName="user" referencedColumnNames="id"/>
+
+        <addForeignKeyConstraint constraintName="fk_role"
+                                 baseTableName="user_role" baseColumnNames="role_id"
+                                 referencedTableName="role" referencedColumnNames="id"/>
+    </changeSet>
+</databaseChangeLog>
