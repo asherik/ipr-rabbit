@@ -106,3 +106,24 @@ sudo bash ./publish_rabbit.sh
 ## Лицензия
 
 MIT
+
+ключ шифрования openam
+
+P3dm9dGjkWnXNTKXWEGHBDLjY9QPqOzw
+
+*  Port
+   50389
+*  Admin Port
+   4444
+*  JMX Port
+   1689
+
+дефолтный пароль 210236ss18ss
+
+Агент политики по умолчанию [UrlAccessAgent] 210236ss
+
+http://openam.mydomain.com:8082/openam/XUI/#realms
+логин и пароль
+amAdmin
+210236ss18ss
+

@@ -55,3 +55,16 @@ ipr-rabbit:
       receiveTimeout: 5000
       defaultRequeueRejected: false
       acknowledgeMode: "MANUAL"
+
+openam:
+  client:
+    clientId: OAuth2Agent
+    clientSecret: 210236ss18ss
+    accessTokenUri: http://0.0.0.0:8082/openam/oauth2/access_token
+    userAuthorizationUri: http://0.0.0.0:8082/openam/oauth2/authorize
+    tokenName: access_token
+    authenticationScheme: query
+    clientAuthenticationScheme: form
+    scope: openid email profile
+  resource:
+    userInfoUri: http://openam.example.com:9000/openam/oauth2/userinfo

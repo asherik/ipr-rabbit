@@ -1,0 +1,11 @@
+version: "3.9"
+
+services:
+    openam:
+        container_name: openam
+        image: webento/openam:latest
+        hostname: openam.mydomain.com
+        ports:
+            - "8082:8080"
+      #  volumes:
+        #      - ./openam-data/conf:/usr/local/tomcat/conf
